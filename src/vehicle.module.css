@@ -1,0 +1,224 @@
+.vehicleContainer {
+  border: 2px solid rgb(243, 236, 228);
+  background-color: rgb(66, 66, 66);
+  background: linear-gradient(to top right, rgb(47, 47, 47), rgb(79, 80, 84));
+  background: -webkit-linear-gradient(
+    to top right,
+    rgb(35, 37, 43),
+    rgb(112, 113, 123)
+  );
+  margin: 3%;
+  border-radius: 20px;
+  min-width: 350px;
+  height: 530px;
+  transition: all 0.7s ease;
+}
+.title {
+  color: rgb(243, 236, 228);
+  cursor: default;
+}
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  font-size: 15px;
+  color: #bbbbbb;
+  font-variant-caps: all-petite-caps;
+  font-weight: bold;
+}
+/* Vehicle list container */
+.VehicleListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.vehicleList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+}
+.vehicle {
+  margin: 0 5%;
+  width: max-content;
+}
+.vehicle:hover .vehicleName {
+  color: rgb(243, 236, 228);
+}
+.vehicle:hover .vehicleName:after {
+  width: 100%;
+  left: 0%;
+}
+.vehicleName {
+  font-size: 20px;
+  margin-top: 0px;
+  cursor: pointer;
+  color: rgb(243, 236, 228);
+  letter-spacing: 0.2px;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+
+  transition: all 0.3s ease;
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+.vehicleName:focus:after,
+.vehicleName:hover:after {
+  width: 100%;
+  left: 0%;
+}
+.vehicleName:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #bbbbbb;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+
+.selectedVehiclesContainer {
+  display: none;
+}
+
+/* Vehicles container expanded */
+.vehicleContainerExpanded {
+  border: 2px solid rgb(243, 236, 228);
+  background-color: rgb(66, 66, 66);
+  background: linear-gradient(to top right, rgb(47, 47, 47), rgb(79, 80, 84));
+  background: -webkit-linear-gradient(
+    to top right,
+    rgb(35, 37, 43),
+    rgb(112, 113, 123)
+  );
+  margin: 5%;
+  border-radius: 20px;
+  width: 800px;
+  height: 620px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  transition: all 1s ease;
+  overflow: hidden;
+}
+.selectedVehiclesContainerExpanded {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 5%;
+  height: max-content;
+}
+/* header */
+.selectedVehiclesHeader {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  align-items: center;
+  margin-top: -20px;
+  color: rgb(243, 236, 228);
+}
+.selectedTitle {
+  text-decoration: 2px solid underline;
+  cursor: default;
+  font-variant-caps: all-small-caps;
+}
+.closeButton {
+  font-size: 30px;
+  cursor: pointer;
+}
+/*  */
+/* vehicles details */
+.selectedVehiclesTable {
+  display: flex;
+  flex-direction: column;
+  color: rgb(243, 236, 228);
+  transition: all 0.4s ease;
+}
+.vehiclesDetailsContainer {
+  border: 1px solid #bbbbbb;
+  border-radius: 10px;
+
+  margin: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  cursor: default;
+}
+.vehicleDetailsTitle {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.vehicleDetail {
+  display: flex;
+  text-align: -webkit-left;
+  text-align: start;
+  justify-content: flex-start;
+}
+/*  */
+/*  */
+
+@media screen and (max-width: 850px) {
+  .vehicleContainer {
+    max-width: 80%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .selectedTitle {
+    font-size: 23px;
+  }
+  .title {
+    font-size: 23px;
+  }
+  .vehicleName {
+    font-size: 15px;
+  }
+  .vehiclesDetailsContainer {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .selectedVehiclesContainer {
+    margin: 20px 15px 0 0;
+  }
+  .selectedTitle {
+    font-size: 18px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .vehicleName {
+    font-size: 12px;
+  }
+  .vehiclesDetailsContainer {
+    font-size: 11px;
+  }
+}
+@media screen and (max-width: 355px) {
+  .selectedTitle {
+    font-size: 14px;
+  }
+  .title {
+    font-size: 16px;
+  }
+  .vehicleName {
+    font-size: 11px;
+  }
+  .vehiclesDetailsContainer {
+    font-size: 9px;
+  }
+}

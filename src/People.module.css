@@ -1,0 +1,177 @@
+.peopleContainer {
+  border: 2px solid rgb(243, 236, 228);
+  background-color: rgb(66, 66, 66);
+  background: linear-gradient(to top right, rgb(47, 47, 47), rgb(79, 80, 84));
+  background: -webkit-linear-gradient(
+    to top right,
+    rgb(35, 37, 43),
+    rgb(112, 113, 123)
+  );
+  margin: 3%;
+  border-radius: 20px;
+  width: 60%;
+}
+.peopleList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.title {
+  color: rgb(243, 236, 228);
+  cursor: default;
+}
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  font-size: 15px;
+  color: #bbbbbb;
+  font-variant-caps: all-petite-caps;
+  font-weight: bold;
+}
+/* person image and name */
+.person {
+  margin: 0 10%;
+}
+.person:hover .peopleName {
+  color: rgb(243, 236, 228);
+}
+.person:hover .peopleName:after {
+  width: 100%;
+  left: 0%;
+}
+.peopleImage {
+  width: 100px;
+  cursor: pointer;
+  border-radius: 50%;
+  height: 100px;
+  object-fit: cover;
+  top: 20px;
+  border: 1px solid rgb(255, 247, 238);
+}
+.peopleName {
+  font-size: 15px;
+  margin-top: 0px;
+  cursor: pointer;
+  color: rgb(243, 236, 228);
+
+  transition: all 0.3s ease;
+  position: relative;
+  border: none;
+  background: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: color;
+}
+.peopleName:focus:after,
+.peopleName:hover:after {
+  width: 100%;
+  left: 0%;
+}
+.peopleName:after {
+  content: "";
+  pointer-events: none;
+  bottom: -2px;
+  left: 50%;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: #bbbbbb;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 400ms;
+  transition-property: width, left;
+}
+/*  */
+
+/* expanded information container */
+.modalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.modal {
+  background-color: #65656534;
+  border: 1px solid rgb(243, 236, 228);
+  padding: 10px;
+  border-radius: 13px;
+  max-width: 400px;
+  width: 100%;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.modalHeader {
+  display: grid;
+  grid-template-columns: 95% 5%;
+  align-items: center;
+  margin-top: -17px;
+  color: rgb(255, 239, 219);
+}
+.closeButton {
+  position: relative;
+  display: flex;
+  place-content: flex-end;
+  font-size: 30px;
+  cursor: pointer;
+  margin-top: -15px;
+  padding: 0px;
+}
+.selectedPersonTitle {
+  cursor: default;
+}
+.modalMiniContainer {
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  padding: 1%;
+}
+.selectedPersonImage {
+  max-width: 180px;
+  border: 2px solid rgb(255, 239, 219);
+  border-radius: 10px;
+  /* margin-right: 20px; */
+}
+.selectedPersonUlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  list-style: none;
+  text-align: start;
+  color: rgb(255, 239, 219);
+}
+.selectedPersonList {
+  padding: 8% 0;
+  cursor: default;
+  letter-spacing: 0.2px;
+  font-weight: 600;
+}
+/*  */
+
+@media screen and (max-width: 900px) {
+  .peopleList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width: 600px) {
+  .peopleContainer {
+    width: 90%;
+  }
+  .peopleList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .modal {
+    width: 80%;
+  }
+  .selectedPersonImage {
+    max-width: 150px;
+    object-fit: cover;
+  }
+}

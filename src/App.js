@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+import "./App.css"
+import People from "./people"
+import Vehicle from "./vehicle"
 
 function App() {
+  // search functionality
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value)
+  }
+  //
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type="search"
+        name="search"
+        value={searchQuery}
+        onChange={handleSearch}
+        placeholder="Search..."
+        className="searchInput"
+        autoComplete="off"
+        autoCorrect="off"
+      />
+      <People searchQuery={searchQuery} />
+      <Vehicle searchQuery={searchQuery} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
