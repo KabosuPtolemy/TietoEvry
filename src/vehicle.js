@@ -1,41 +1,57 @@
 import { useEffect, useState, useRef } from "react"
 import Styles from "./vehicle.module.css"
 
+// hides unknown values
+const isUnknownValue = (value) => {
+  return (
+    !value ||
+    value === "" ||
+    value.toLowerCase() === "unknown" ||
+    value.toLowerCase() === "none"
+  )
+}
+//
+
 const Vehicle = ({ searchQuery }) => {
   const [vehicle, setVehicle] = useState([])
   const [selectedVehicleDetails, setSelectedVehicleDetails] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const vehicleContainerRef = useRef(null)
 
-  // fetches people from SWAPI
+  // fetches vehicles from SWAPI
   useEffect(() => {
-    fetch("https://swapi.dev/api/vehicles/")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://swapi.dev/api/vehicles/")
+        const data = await response.json()
         setVehicle(data.results)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log("Failed to fetch data from SWAPI", error)
-      })
-  }, [])
-  //
-  // search function
-  useEffect(() => {
-    let apiUrl = "https://swapi.dev/api/vehicles/"
-    if (searchQuery) {
-      apiUrl += `?search=${encodeURIComponent(searchQuery)}`
+      }
     }
 
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
+    fetchData()
+  }, [])
+
+  // search function
+  useEffect(() => {
+    const fetchData = async () => {
+      let apiUrl = "https://swapi.dev/api/vehicles/"
+      if (searchQuery) {
+        apiUrl += `?search=${encodeURIComponent(searchQuery)}`
+      }
+
+      try {
+        const response = await fetch(apiUrl)
+        const data = await response.json()
         setVehicle(data.results)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log("Failed to fetch data from SWAPI", error)
-      })
+      }
+    }
+
+    fetchData()
   }, [searchQuery])
-  //
 
   //   fetches details about a vehicle from SWAPI
   const handleVehicleClick = (vehicle) => {
@@ -51,27 +67,16 @@ const Vehicle = ({ searchQuery }) => {
   }
   //
 
-  // hides unknown values
-  const isUnknownValue = (value) => {
-    return (
-      !value ||
-      value === "" ||
-      value.toLowerCase() === "unknown" ||
-      value.toLowerCase() === "none"
-    )
-  }
-  //
   //closes selected vehicles details container
   const handleClose = () => {
-    setIsExpanded(null)
+    setIsExpanded(false)
   }
-  // closes the expansion when user clicks outside of its boundaries
+  //
+
+  // closes the expansion when the user clicks outside of its boundaries
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        vehicleContainerRef.current &&
-        !vehicleContainerRef.current.contains(event.target)
-      ) {
+      if (!vehicleContainerRef.current.contains(event.target)) {
         setIsExpanded(false)
       }
     }

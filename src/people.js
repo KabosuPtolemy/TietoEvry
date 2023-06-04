@@ -1,56 +1,75 @@
 import React, { useEffect, useState, useRef } from "react"
 import Styles from "./People.module.css"
 
+// gets images for people from SWAPI
+const getPersonImage = (person) => {
+  const personId = extractIdFromUrl(person.url)
+  return `https://starwars-visualguide.com/assets/img/characters/${personId}.jpg`
+}
+//
+
+// extracts the ID from the URL
+const extractIdFromUrl = (url) => {
+  const regex = /\/(\d+)\/$/
+  const match = url.match(regex)
+  if (match && match[1]) {
+    return match[1]
+  }
+  return null
+}
+//
+
+// hides unknown values
+const isUnknownValue = (value) => {
+  return (
+    !value ||
+    value === "" ||
+    value.toLowerCase() === "unknown" ||
+    value.toLowerCase() === "none"
+  )
+}
+//
+
 const People = ({ searchQuery }) => {
   const [people, setPeople] = useState([])
   const [selectedPerson, setSelectedPerson] = useState(null)
   const containerRef = useRef(null)
+
   // fetches people from SWAPI
   useEffect(() => {
-    fetch("https://swapi.dev/api/people/")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://swapi.dev/api/people/")
+        const data = await response.json()
         setPeople(data.results)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log("Failed to fetch data from SWAPI", error)
-      })
+      }
+    }
+
+    fetchData()
   }, [])
-  //
 
   // search function
   useEffect(() => {
-    let apiUrl = "https://swapi.dev/api/people/"
-    if (searchQuery) {
-      apiUrl += `?search=${encodeURIComponent(searchQuery)}`
-    }
+    const fetchData = async () => {
+      let apiUrl = "https://swapi.dev/api/people/"
+      if (searchQuery) {
+        apiUrl += `?search=${encodeURIComponent(searchQuery)}`
+      }
 
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
+      try {
+        const response = await fetch(apiUrl)
+        const data = await response.json()
         setPeople(data.results)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log("Failed to fetch data from SWAPI", error)
-      })
-  }, [searchQuery])
-  //
-
-  // gets images for people from SWAPI
-  const getPersonImage = (person) => {
-    const personId = extractIdFromUrl(person.url)
-    return `https://starwars-visualguide.com/assets/img/characters/${personId}.jpg`
-  }
-  //
-  // extracts the ID from the URL
-  const extractIdFromUrl = (url) => {
-    const regex = /\/(\d+)\/$/
-    const match = url.match(regex)
-    if (match && match[1]) {
-      return match[1]
+      }
     }
-    return null
-  }
+
+    fetchData()
+  }, [searchQuery])
+
   // sets the selected person after click
   const handlePersonClick = (person) => {
     setSelectedPerson(person)
@@ -79,16 +98,6 @@ const People = ({ searchQuery }) => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
-  //
-  // hides unknown values
-  const isUnknownValue = (value) => {
-    return (
-      !value ||
-      value === "" ||
-      value.toLowerCase() === "unknown" ||
-      value.toLowerCase() === "none"
-    )
-  }
   //
 
   return (
