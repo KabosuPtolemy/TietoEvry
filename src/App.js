@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import "./App.css"
-import People from "./people"
-import Vehicle from "./vehicle"
+// import People from "./people"
+import People from "./pages/People"
+import Vehicle from "./pages/Vehicle"
 
 function App() {
   // search functionality

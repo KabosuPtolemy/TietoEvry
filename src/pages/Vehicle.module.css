@@ -27,6 +27,16 @@
   font-variant-caps: all-petite-caps;
   font-weight: bold;
 }
+.detailsError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: large;
+  font-weight: bold;
+  letter-spacing: 0.1px;
+  color: #871e1e;
+}
 /* Vehicle list container */
 .VehicleListContainer {
   display: flex;

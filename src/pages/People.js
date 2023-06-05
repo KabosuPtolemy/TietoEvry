@@ -1,34 +1,8 @@
 import React, { useEffect, useState, useRef } from "react"
+import { isUnknownValue } from "../utils/UnknownValue"
+import { getPersonImage } from "../utils/PersonImage"
+
 import Styles from "./People.module.css"
-
-// gets images for people from SWAPI
-const getPersonImage = (person) => {
-  const personId = extractIdFromUrl(person.url)
-  return `https://starwars-visualguide.com/assets/img/characters/${personId}.jpg`
-}
-//
-
-// extracts the ID from the URL
-const extractIdFromUrl = (url) => {
-  const regex = /\/(\d+)\/$/
-  const match = url.match(regex)
-  if (match && match[1]) {
-    return match[1]
-  }
-  return null
-}
-//
-
-// hides unknown values
-const isUnknownValue = (value) => {
-  return (
-    !value ||
-    value === "" ||
-    value.toLowerCase() === "unknown" ||
-    value.toLowerCase() === "none"
-  )
-}
-//
 
 const People = ({ searchQuery }) => {
   const [people, setPeople] = useState([])
@@ -36,53 +10,31 @@ const People = ({ searchQuery }) => {
   const containerRef = useRef(null)
 
   // fetches people from SWAPI
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://swapi.dev/api/people/")
-        const data = await response.json()
-        setPeople(data.results)
-      } catch (error) {
-        console.log("Failed to fetch data from SWAPI", error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
   // search function
+  // closes popup when user clicks outside of its boundaries
   useEffect(() => {
     const fetchData = async () => {
-      let apiUrl = "https://swapi.dev/api/people/"
-      if (searchQuery) {
-        apiUrl += `?search=${encodeURIComponent(searchQuery)}`
-      }
-
       try {
+        let apiUrl = "https://swapi.dev/api/people/"
+        if (searchQuery) {
+          apiUrl += `?search=${encodeURIComponent(searchQuery)}`
+        }
+
         const response = await fetch(apiUrl)
         const data = await response.json()
         setPeople(data.results)
       } catch (error) {
         console.log("Failed to fetch data from SWAPI", error)
+        return (
+          <div className={Styles.detailsError}>
+            Error: Failed to fetch people list.
+          </div>
+        )
       }
     }
 
     fetchData()
-  }, [searchQuery])
 
-  // sets the selected person after click
-  const handlePersonClick = (person) => {
-    setSelectedPerson(person)
-  }
-  //
-  // closes selected persons container
-  const handleClose = () => {
-    setSelectedPerson(null)
-  }
-  //
-
-  // closes popup when user clicks outside of its boundaries
-  useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         containerRef.current &&
@@ -97,7 +49,18 @@ const People = ({ searchQuery }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [])
+  }, [searchQuery])
+
+  // sets the selected person after click
+  const handlePersonClick = (person) => {
+    setSelectedPerson(person)
+  }
+  //
+
+  // closes selected persons container
+  const handleClose = () => {
+    setSelectedPerson(null)
+  }
   //
 
   return (
